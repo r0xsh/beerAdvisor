@@ -9,13 +9,13 @@ public class Beers {
 
     @SerializedName("data")
     @Expose
-    private List<Beer> data;
+    private List<Beer> beers;
 
-    public List<Beer> getData() {
-        return data;
+    public List<Beer> getBeers() {
+        return beers;
     }
 
-    public void setData(List<Beer> data) {
-        this.data = data;
+    public void setBeers(List<Beer> beers) {
+        this.beers = beers;
     }
 }
