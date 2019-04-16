@@ -1,11 +1,10 @@
 package me.antoinebagnaud.beeradvisor;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.navigation.NavigationView;
@@ -16,7 +15,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import me.antoinebagnaud.beeradvisor.Http.BreweryDB;
-import me.antoinebagnaud.beeradvisor.Model.Beer;
 import me.antoinebagnaud.beeradvisor.Model.Beers;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,10 +23,12 @@ import retrofit2.Response;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public Context getContext() {
+        return (Context)this;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,9 @@ public class MainActivity extends AppCompatActivity
                 b.getService().searchBeer("ipa").enqueue(new Callback<Beers>() {
                     @Override
                     public void onResponse(Call<Beers> call, Response<Beers> response) {
-                        Beers oui = response.body();
-                        Log.d("oui", oui.toString());
+                        final Beers oui = response.body();
+
+                        AsyncData.insertBeers(getContext(), oui.getBeers());
                     }
 
                     @Override
