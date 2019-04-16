@@ -3,10 +3,17 @@ package me.antoinebagnaud.beeradvisor.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Beer {
 
     @SerializedName("id")
     @Expose
+    @PrimaryKey
+    @NonNull
     private String id;
 
     @SerializedName("name")
@@ -31,3 +38,4 @@ public class Beer {
     }
 
 }
+
