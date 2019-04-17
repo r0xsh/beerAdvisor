@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -63,6 +65,7 @@ public class BeerAdaptor extends RecyclerView.Adapter<BeerAdaptor.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Beer beer = beers.get(position);
         holder.name.setText(beer.getName());
+        Picasso.get().load("https://weber.fi.eu.org/blog/images/Innis_and_Gunn_Rum_Cask.jpg").into(holder.image);
     }
 
     @Override
