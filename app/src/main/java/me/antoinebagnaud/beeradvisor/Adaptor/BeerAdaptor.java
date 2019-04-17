@@ -3,11 +3,14 @@ package me.antoinebagnaud.beeradvisor.Adaptor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -43,6 +46,11 @@ public class BeerAdaptor extends RecyclerView.Adapter<BeerAdaptor.ViewHolder> {
     public void add(int position, Beer item) {
         beers.add(item);
         notifyItemInserted(position);
+    }
+
+    public void setBeers(List<Beer> beers) {
+        this.beers = beers;
+        notifyDataSetChanged();
     }
 
     public void remove(int position) {
