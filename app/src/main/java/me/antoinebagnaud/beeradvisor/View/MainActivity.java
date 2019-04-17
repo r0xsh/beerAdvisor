@@ -16,29 +16,6 @@ import me.antoinebagnaud.beeradvisor.R;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                BreweryDB b = new BreweryDB();
-//                b.getService().searchBeer("ipa").enqueue(new Callback<BeersFragment>() {
-//                    @Override
-//                    public void onResponse(Call<BeersFragment> call, Response<BeersFragment> response) {
-//                        final BeersFragment oui = response.body();
-//
-//                        AsyncData.insertBeers(getContext(), oui.getBeers());
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<BeersFragment> call, Throwable t) {
-//                        //Log.d(TAG, "onFailure: " + t.getMessage());
-//                        t.printStackTrace();
-//                    }
-//                });
-//            }
-//        });
-
     private TextView mTextMessage;
     private FragmentManager fragmentManager;
 

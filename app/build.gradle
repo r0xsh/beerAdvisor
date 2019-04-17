@@ -48,4 +48,7 @@ dependencies {
 
     // RatingStars
     implementation 'me.zhanghai.android.materialratingbar:library:1.3.2'
+
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
