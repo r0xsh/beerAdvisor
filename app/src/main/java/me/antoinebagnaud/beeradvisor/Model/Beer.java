@@ -25,32 +25,22 @@ public class Beer implements Parcelable {
 
     private String image;
 
-    private float lat;
+    private double lat;
 
-    private float lng;
+    private double lng;
 
     private int count;
 
-    public Beer(Parcel in) {
+    public Beer() {}
+
+    protected Beer(Parcel in) {
         name = in.readString();
         critic = in.readString();
         rate = in.readFloat();
+        image = in.readString();
+        lat = in.readDouble();
+        lng = in.readDouble();
         count = in.readInt();
-    }
-
-    public Beer(){    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(critic);
-        dest.writeFloat(rate);
-        dest.writeInt(count);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public static final Creator<Beer> CREATOR = new Creator<Beer>() {
@@ -64,6 +54,19 @@ public class Beer implements Parcelable {
             return new Beer[size];
         }
     };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(critic);
+        dest.writeFloat(rate);
+        dest.writeInt(count);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     public String getName() {
         return name;
@@ -85,24 +88,24 @@ public class Beer implements Parcelable {
 
     public void setImage(String image) { this.image = image; }
 
-    public float getLat() {
-        return lat;
-    }
-
-    public void setLat(float lat) {
-        this.lat = lat;
-    }
-
-    public float getLng() {
-        return lng;
-    }
-
-    public void setLng(float lng) {
-        this.lng = lng;
-    }
-
     public int getCount() { return count; }
 
     public void setCount(int count) { this.count = count; }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
 }
 
