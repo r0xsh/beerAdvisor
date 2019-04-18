@@ -1,6 +1,7 @@
 package me.antoinebagnaud.beeradvisor.View;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,6 +28,7 @@ import java.util.LinkedList;
 import java.util.concurrent.ExecutionException;
 
 import me.antoinebagnaud.beeradvisor.AsyncData;
+import me.antoinebagnaud.beeradvisor.Listener.GPSListener;
 import me.antoinebagnaud.beeradvisor.Model.Beer;
 import me.antoinebagnaud.beeradvisor.R;
 
@@ -47,6 +50,7 @@ public class MapFragment extends Fragment {
 
 
         map = (MapView) view.findViewById(R.id.map);
+        map.setTileSource(TileSourceFactory.MAPNIK);
         map.setMultiTouchControls(true);
 
         ItemizedIconOverlay markersOverlay = new
@@ -60,6 +64,15 @@ public class MapFragment extends Fragment {
                 startMarker.setPosition(new GeoPoint(b.getLat(), b.getLng()));
                 startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                 startMarker.setTitle(b.getName());
+                startMarker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker, MapView mapView) {
+                        Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                        intent.putExtra(DetailsActivity.EXTRA, b);
+                        getActivity().startActivity(intent);
+                        return true;
+                    }
+                });
                 map.getOverlays().add(startMarker);
             }
         } catch (ExecutionException e) {
@@ -69,9 +82,11 @@ public class MapFragment extends Fragment {
         }
 
         IMapController mapController = map.getController();
-        mapController.setZoom(9.5);
-        GeoPoint startPoint = new GeoPoint(mainActivity.location.getLatitude(), mainActivity.location.getLongitude());
-        mapController.setCenter(startPoint);
+        mapController.setZoom(15d);
+        mapController.setCenter(new GeoPoint(
+                GPSListener.getLocation().getLatitude(),
+                GPSListener.getLocation().getLongitude())
+        );
 
         return view;
     }
