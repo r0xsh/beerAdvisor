@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
 import java.util.concurrent.ExecutionException;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -40,8 +43,8 @@ public class DetailsActivity extends AppCompatActivity {
             beerName.setText(beer.getName());
             beerCritic.setText(beer.getCritic());
             beerRating.setRating(beer.getRate());
-            //la photo a gerer après
-            beerCount.setText("" + beer.getCount());
+            Glide.with(this).load(new File(beer.getImage())).into(beerPicture);
+            beerCount.setText(Integer.toString(beer.getCount()));
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
