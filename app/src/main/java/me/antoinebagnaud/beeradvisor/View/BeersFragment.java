@@ -37,34 +37,13 @@ public class BeersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         try {
-            adapter = new BeerAdaptor(AsyncData.getAll(view.getContext()));
+            adapter = new BeerAdaptor(getActivity(), AsyncData.getAll(view.getContext()));
             recyclerView.setAdapter(adapter);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
-
-        // Onclick
-        FloatingActionButton btn = view.findViewById(R.id.add_btn);
-        btn.setOnClickListener(v -> {
-            BreweryDB b = new BreweryDB();
-            b.getService().searchBeer("ipa").enqueue(new Callback<Beers>() {
-                @Override
-                public void onResponse(Call<Beers> call, Response<Beers> response) {
-                    final Beers oui = response.body();
-                    AsyncData.insertBeers(getActivity(), oui.getBeers());
-                }
-
-                @Override
-                public void onFailure(Call<Beers> call, Throwable t) {
-                    //Log.d(TAG, "onFailure: " + t.getMessage());
-                    t.printStackTrace();
-                }
-            });
-        });
 
         return view;
     }

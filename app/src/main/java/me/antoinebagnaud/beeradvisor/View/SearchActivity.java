@@ -33,7 +33,7 @@ public class SearchActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.search_result);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerView.Adapter adapter = new BeerAdaptor(new ArrayList<>());
+        RecyclerView.Adapter adapter = new BeerAdaptor(this, new ArrayList<>());
         recyclerView.setAdapter(adapter);
 
         BreweryDB b = new BreweryDB();
@@ -41,7 +41,9 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Beers> call, Response<Beers> response) {
                 final Beers oui = response.body();
-                ((BeerAdaptor) adapter).setBeers(oui.getBeers());
+                if (oui.getBeers() != null) {
+                    ((BeerAdaptor) adapter).setBeers(oui.getBeers());
+                }
             }
 
             @Override
