@@ -1,16 +1,15 @@
 package me.antoinebagnaud.beeradvisor.Adaptor;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -21,7 +20,9 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 public class BeerAdaptor extends RecyclerView.Adapter<BeerAdaptor.ViewHolder> {
 
+    private Context context;
     private List<Beer> beers;
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
@@ -39,7 +40,8 @@ public class BeerAdaptor extends RecyclerView.Adapter<BeerAdaptor.ViewHolder> {
         }
     }
 
-    public BeerAdaptor(List<Beer> beers) {
+    public BeerAdaptor(Context context, List<Beer> beers) {
+        this.context = context;
         this.beers = beers;
     }
 
@@ -74,7 +76,9 @@ public class BeerAdaptor extends RecyclerView.Adapter<BeerAdaptor.ViewHolder> {
         final Beer beer = beers.get(position);
         holder.name.setText(beer.getName());
         holder.ratingBar.setRating(beer.getRate());
-        Picasso.get().load("https://weber.fi.eu.org/blog/images/Innis_and_Gunn_Rum_Cask.jpg").into(holder.image);
+        if (beer.getImage() != null) {
+            Glide.with(context).load(new File(beer.getImage())).thumbnail(0.5f).centerCrop().into(holder.image);
+        }
     }
 
     @Override

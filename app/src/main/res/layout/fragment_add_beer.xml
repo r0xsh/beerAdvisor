@@ -9,7 +9,7 @@
 
     <EditText
         android:id="@+id/editTextBeerName"
-        android:layout_width="395dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -105,6 +105,8 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonValidate"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonTakePicture"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/Widget.MaterialRatingBar.RatingBar"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
