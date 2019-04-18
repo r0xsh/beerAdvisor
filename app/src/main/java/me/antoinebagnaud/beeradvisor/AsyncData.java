@@ -59,4 +59,15 @@ public class AsyncData {
         };
         return task.execute().get();
     }
+
+    public static Beer findByName(final Context context, Beer beer) throws ExecutionException, InterruptedException {
+        AsyncTask<Void, Void, Beer> task = new AsyncTask<Void, Void, Beer>() {
+            @Override
+            protected Beer doInBackground(Void... voids) {
+                return getDb(context).beerDao().findByName(beer.getName());
+
+            }
+        };
+        return task.execute().get();
+    }
 }

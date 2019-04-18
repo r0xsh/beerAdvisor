@@ -1,26 +1,26 @@
 package me.antoinebagnaud.beeradvisor.Adaptor;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import me.antoinebagnaud.beeradvisor.Model.Beer;
 import me.antoinebagnaud.beeradvisor.R;
+import me.antoinebagnaud.beeradvisor.View.DetailsActivity;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 public class BeerAdaptor extends RecyclerView.Adapter<BeerAdaptor.ViewHolder> {
-
     private List<Beer> beers;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -28,10 +28,12 @@ public class BeerAdaptor extends RecyclerView.Adapter<BeerAdaptor.ViewHolder> {
         public ImageView image;
         public View layout;
         public MaterialRatingBar ratingBar;
+        public CardView cardView;
 
         public ViewHolder(View v) {
             super(v);
             layout = v;
+            cardView = v.findViewById(R.id.cardViewBeer);
             name = v.findViewById(R.id.beer_name);
             image = v.findViewById(R.id.beer_img);
             ratingBar = v.findViewById(R.id.beer_rate);
@@ -75,6 +77,14 @@ public class BeerAdaptor extends RecyclerView.Adapter<BeerAdaptor.ViewHolder> {
         holder.name.setText(beer.getName());
         holder.ratingBar.setRating(beer.getRate());
         Picasso.get().load("https://weber.fi.eu.org/blog/images/Innis_and_Gunn_Rum_Cask.jpg").into(holder.image);
+        holder.cardView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(v.getContext(), DetailsActivity.class);
+                intent.putExtra(DetailsActivity.EXTRA, beer);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
