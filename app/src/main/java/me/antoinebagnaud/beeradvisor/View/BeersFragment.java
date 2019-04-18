@@ -24,6 +24,8 @@ import retrofit2.Response;
 
 public class BeersFragment extends Fragment {
 
+    public BeerAdaptor adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
@@ -33,35 +35,35 @@ public class BeersFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.beers_in_db);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         try {
-            BeerAdaptor beerAdaptor = new BeerAdaptor(AsyncData.getAll(view.getContext()));
-            recyclerView.setAdapter(beerAdaptor);
+            adapter = new BeerAdaptor(AsyncData.getAll(view.getContext()));
+            recyclerView.setAdapter(adapter);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+
+
         // Onclick
         FloatingActionButton btn = view.findViewById(R.id.add_btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BreweryDB b = new BreweryDB();
-                b.getService().searchBeer("ipa").enqueue(new Callback<Beers>() {
-                    @Override
-                    public void onResponse(Call<Beers> call, Response<Beers> response) {
-                        final Beers oui = response.body();
-                        AsyncData.insertBeers(getActivity(), oui.getBeers());
-                    }
+        btn.setOnClickListener(v -> {
+            BreweryDB b = new BreweryDB();
+            b.getService().searchBeer("ipa").enqueue(new Callback<Beers>() {
+                @Override
+                public void onResponse(Call<Beers> call, Response<Beers> response) {
+                    final Beers oui = response.body();
+                    AsyncData.insertBeers(getActivity(), oui.getBeers());
+                }
 
-                    @Override
-                    public void onFailure(Call<Beers> call, Throwable t) {
-                        //Log.d(TAG, "onFailure: " + t.getMessage());
-                        t.printStackTrace();
-                    }
-                });
-            }
+                @Override
+                public void onFailure(Call<Beers> call, Throwable t) {
+                    //Log.d(TAG, "onFailure: " + t.getMessage());
+                    t.printStackTrace();
+                }
+            });
         });
 
         return view;
