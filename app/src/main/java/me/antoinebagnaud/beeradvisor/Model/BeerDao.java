@@ -12,8 +12,8 @@ public interface BeerDao {
     @Query("SELECT * FROM beer")
     List<Beer> getAll();
 
-    @Query("SELECT * FROM beer WHERE id IN (:userIds)")
-    List<Beer> loadAllByIds(int[] userIds);
+    @Query("SELECT * FROM beer WHERE name IN (:userIds)")
+    List<Beer> loadAllByIds(String[] userIds);
 
     @Query("SELECT * FROM beer WHERE name LIKE :name LIMIT 1")
     Beer findByName(String name);

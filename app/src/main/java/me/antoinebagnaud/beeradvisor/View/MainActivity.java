@@ -3,12 +3,9 @@ package me.antoinebagnaud.beeradvisor.View;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import me.antoinebagnaud.beeradvisor.Adaptor.BeerAdaptor;
 import me.antoinebagnaud.beeradvisor.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new BeersFragment();
                     break;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    fragment = new AddBeerFragment();
                     break;
                 case R.id.navigation_notifications:
                     fragment = new MapFragment();
@@ -72,9 +68,6 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-
-
     }
 
     @Override

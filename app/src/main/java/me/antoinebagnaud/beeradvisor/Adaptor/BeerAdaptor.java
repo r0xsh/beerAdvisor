@@ -73,6 +73,7 @@ public class BeerAdaptor extends RecyclerView.Adapter<BeerAdaptor.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Beer beer = beers.get(position);
         holder.name.setText(beer.getName());
+        holder.ratingBar.setRating(beer.getRate());
         Picasso.get().load("https://weber.fi.eu.org/blog/images/Innis_and_Gunn_Rum_Cask.jpg").into(holder.image);
     }
 

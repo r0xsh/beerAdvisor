@@ -10,24 +10,15 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Beer {
 
-    @SerializedName("id")
-    @Expose
+    @SerializedName("name")
     @PrimaryKey
     @NonNull
-    private String id;
-
-    @SerializedName("name")
     @Expose
     private String name;
 
+    private String critic;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    private float rate;
 
     public String getName() {
         return name;
@@ -37,5 +28,12 @@ public class Beer {
         this.name = name;
     }
 
+    public String getCritic() { return critic; }
+
+    public void setCritic(String critic) { this.critic = critic; }
+
+    public float getRate() { return rate; }
+
+    public void setRate(float rate) { this.rate = rate; }
 }
 

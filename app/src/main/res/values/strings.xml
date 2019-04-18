@@ -11,6 +11,9 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
+    <string name="button_add_beer">J\'ai bu</string>
+    <string name="text_view_add_beer_name">Patronyme de la bière</string>
+    <string name="text_view_add_beer_critic">Critique avisée</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Search</string>
