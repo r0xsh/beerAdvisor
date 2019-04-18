@@ -6,10 +6,10 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_maps">Maps</string>
+    <string name="title_activity_main">BeerAdvisor</string>
+    <string name="title_list">Liste</string>
+    <string name="title_add">Ajout</string>
+    <string name="title_maps">Carte</string>
 
     <string name="button_add_beer">J\'ai bu</string>
     <string name="text_view_add_beer_name">Patronyme de la bière</string>

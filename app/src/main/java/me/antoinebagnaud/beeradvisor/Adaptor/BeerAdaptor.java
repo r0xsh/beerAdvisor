@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -16,6 +17,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import me.antoinebagnaud.beeradvisor.AsyncData;
 import me.antoinebagnaud.beeradvisor.Model.Beer;
 import me.antoinebagnaud.beeradvisor.R;
 import me.antoinebagnaud.beeradvisor.View.DetailsActivity;
@@ -90,6 +92,14 @@ public class BeerAdaptor extends RecyclerView.Adapter<BeerAdaptor.ViewHolder> {
                 Intent intent = new Intent(v.getContext(), DetailsActivity.class);
                 intent.putExtra(DetailsActivity.EXTRA, beer);
                 v.getContext().startActivity(intent);
+            }
+        });
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v) {
+                AsyncData.incrementCount(v.getContext(), beer);
+                Toast.makeText(v.getContext(), "Et une de plus !", Toast.LENGTH_LONG).show();
+                return true;
             }
         });
     }

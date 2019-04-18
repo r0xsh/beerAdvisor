@@ -6,6 +6,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 @Dao
 public interface BeerDao {
@@ -23,4 +24,7 @@ public interface BeerDao {
 
     @Delete
     void delete(Beer user);
+
+    @Query("UPDATE beer SET count = count + 1 WHERE name = :name")
+    void incrementCount(String name);
 }

@@ -70,4 +70,14 @@ public class AsyncData {
         };
         return task.execute().get();
     }
+
+    public static void incrementCount(final Context context, final Beer beer){
+        AsyncTask<Void, Void, Beer> task = new AsyncTask<Void, Void, Beer>() {
+            @Override
+            protected Beer doInBackground(Void... voids) {
+                getDb(context).beerDao().incrementCount(beer.getName());
+                return beer;
+            }
+        }.execute();
+    }
 }
