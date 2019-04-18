@@ -18,7 +18,15 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.OverlayItem;
 
+import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
+
+import me.antoinebagnaud.beeradvisor.AsyncData;
+import me.antoinebagnaud.beeradvisor.Model.Beer;
 import me.antoinebagnaud.beeradvisor.R;
 
 public class MapFragment extends Fragment {
@@ -40,6 +48,25 @@ public class MapFragment extends Fragment {
 
         map = (MapView) view.findViewById(R.id.map);
         map.setMultiTouchControls(true);
+
+        ItemizedIconOverlay markersOverlay = new
+                ItemizedIconOverlay<OverlayItem>(new LinkedList<OverlayItem>(),
+                getResources().getDrawable(R.drawable.marker_default), null, getActivity());
+        map.getOverlays().add(markersOverlay);
+
+        try {
+            for (Beer b: AsyncData.getAll(getActivity())) {
+                Marker startMarker = new Marker(map);
+                startMarker.setPosition(new GeoPoint(b.getLat(), b.getLng()));
+                startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                startMarker.setTitle(b.getName());
+                map.getOverlays().add(startMarker);
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         IMapController mapController = map.getController();
         mapController.setZoom(9.5);

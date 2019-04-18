@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import me.antoinebagnaud.beeradvisor.AsyncData;
+import me.antoinebagnaud.beeradvisor.Listener.GPSListener;
 import me.antoinebagnaud.beeradvisor.Model.Beer;
 import me.antoinebagnaud.beeradvisor.R;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
@@ -80,6 +81,8 @@ public class AddBeerFragment extends Fragment {
         beer.setCritic(beerCritic.getText().toString());
         beer.setRate(beerRating.getRating());
         beer.setImage(currentPhotoPath);
+        beer.setLat(GPSListener.getLocation().getLatitude());
+        beer.setLng(GPSListener.getLocation().getLongitude());
         beer.setCount(1);
         List<Beer> beerList = new ArrayList<Beer>();
         beerList.add(beer);

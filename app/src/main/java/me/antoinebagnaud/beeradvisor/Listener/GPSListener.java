@@ -4,21 +4,20 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
-import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 public final class GPSListener implements LocationListener {
 
     private static Location location;
 
-    private List<LocationCallback> callbacks;
+    private static List<LocationCallback> callbacks = new ArrayList<>();
 
-    public abstract class LocationCallback {
+    public abstract static class LocationCallback {
         private Context context;
 
-        LocationCallback(Context context) {
+        public LocationCallback(Context context) {
             this.context = context;
         }
 
@@ -26,11 +25,20 @@ public final class GPSListener implements LocationListener {
             return this.context;
         }
 
-        abstract void onLocation(Context context, Location location);
+        protected abstract void onLocation(Context context, Location location);
+    }
+
+    public static void addCallback(LocationCallback locationCallback) {
+        GPSListener.callbacks.add(locationCallback);
+    }
+
+    public static Location getLocation() {
+        return GPSListener.location;
     }
 
     @Override
     public void onLocationChanged(Location location) {
+        GPSListener.location = location;
         for (LocationCallback locationCallback: callbacks) {
             locationCallback.onLocation(locationCallback.getContext(), location);
         }

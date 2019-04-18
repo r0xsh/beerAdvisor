@@ -25,11 +25,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import me.antoinebagnaud.beeradvisor.Listener.GPSListener;
 import me.antoinebagnaud.beeradvisor.R;
 
 import static me.antoinebagnaud.beeradvisor.View.AddBeerFragment.REQUEST_TAKE_PHOTO;
 
-public class MainActivity extends AppCompatActivity implements LocationListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private TextView mTextMessage;
@@ -91,7 +92,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.d(TAG, "onCreate: GPS REFUSED");
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new GPSListener());
+
+
+        GPSListener.addCallback(new GPSListener.LocationCallback(this) {
+            @Override
+            protected void onLocation(Context context, Location location) {
+                Log.d(TAG, "onLocationChanged: " + location.toString());
+                if (MainActivity.location == null) {
+                    ((MainActivity)context).navigation.getMenu().findItem(R.id.navigation_maps).setEnabled(true);
+                }
+                MainActivity.location = location;
+            }
+        });
+
+
     }
 
     @Override
@@ -123,31 +138,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
+
+
         return true;
     }
 
 
-    @Override
-    public void onLocationChanged(Location location) {
-        Log.d(TAG, "onLocationChanged: " + location.toString());
-        if (MainActivity.location == null) {
-            this.navigation.getMenu().findItem(R.id.navigation_maps).setEnabled(true);
-        }
-        MainActivity.location = location;
-    }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.d(TAG, "onStatusChanged: " + provider + " " + status + " " + extras.toString());
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        Toast.makeText(this, "MERCI CAMARADE !", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Toast.makeText(this, "ON ACTIVE LE GPS CAMARADE !", Toast.LENGTH_LONG).show();
-    }
 }
