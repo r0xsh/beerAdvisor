@@ -80,10 +80,10 @@ public class AddBeerFragment extends Fragment {
         beer.setCritic(beerCritic.getText().toString());
         beer.setRate(beerRating.getRating());
         beer.setImage(currentPhotoPath);
+        beer.setCount(1);
         List<Beer> beerList = new ArrayList<Beer>();
         beerList.add(beer);
         AsyncData.insertBeers(getContext(),beerList);
-        Toast.makeText(getContext(), "Is OK", Toast.LENGTH_LONG).show();
         ((MainActivity) getActivity()).navigation.setSelectedItemId(R.id.navigation_home);
     }
 

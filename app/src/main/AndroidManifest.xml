@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.SearchActivity"></activity>
+        <activity android:name=".View.DetailsActivity"></activity>
+        <activity android:name=".View.SearchActivity" />
         <activity
             android:name=".View.MainActivity"
             android:label="@string/title_activity_main"
