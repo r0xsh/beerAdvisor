@@ -16,6 +16,7 @@ public final class GPSListener implements LocationListener {
 
     public abstract static class LocationCallback {
         private Context context;
+        private int callbackSignature;
 
         public LocationCallback(Context context) {
             this.context = context;
@@ -25,10 +26,24 @@ public final class GPSListener implements LocationListener {
             return this.context;
         }
 
+        public int getCallbackSignature() {
+            return callbackSignature;
+        }
+
+        public void setCallbackSignature(int callbackSignature) {
+            this.callbackSignature = callbackSignature;
+        }
+
         protected abstract void onLocation(Context context, Location location);
     }
 
-    public static void addCallback(LocationCallback locationCallback) {
+    public static void addCallback(LocationCallback locationCallback, int callbackSignature) {
+        for (LocationCallback callback: GPSListener.callbacks) {
+            if (callback.getCallbackSignature() == callbackSignature) {
+                return;
+            }
+        }
+        locationCallback.setCallbackSignature(callbackSignature);
         GPSListener.callbacks.add(locationCallback);
     }
 
