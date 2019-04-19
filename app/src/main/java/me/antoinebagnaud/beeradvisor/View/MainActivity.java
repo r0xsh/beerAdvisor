@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
     private Fragment fragment;
     public BottomNavigationView navigation;
-    public static Location location;
 
     public Context getContext() {
         return (Context) this;
@@ -88,16 +87,22 @@ public class MainActivity extends AppCompatActivity {
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        // GPS ASK
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-        }, 3);
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        }, 1);
 
        initLocation();
 
 
     }
 
+    /**
+     *
+     */
     private void initLocation() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -106,14 +111,16 @@ public class MainActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new GPSListener());
 
 
+        // New GPS callback
         GPSListener.addCallback(new GPSListener.LocationCallback(this) {
+            private boolean firstTrigger = true;
             @Override
             protected void onLocation(Context context, Location location) {
-                Log.d(TAG, "onLocationChanged: " + location.toString());
-                if (MainActivity.location == null) {
+                if (firstTrigger) {
+                    Log.d(TAG, "onLocationChanged: " + location.toString());
                     ((MainActivity)context).navigation.getMenu().findItem(R.id.navigation_maps).setEnabled(true);
                 }
-                MainActivity.location = location;
+                firstTrigger = false;
             }
         }, 12);
     }
@@ -122,13 +129,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == 3)  {
-            for (int p: grantResults) {
-                if (p != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-            }
-
+        if (requestCode == 1 && grantResults[0] == 0 && grantResults[1] == 0)  {
             initLocation();
         }
     }

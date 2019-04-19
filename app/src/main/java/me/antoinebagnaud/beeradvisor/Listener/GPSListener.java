@@ -14,6 +14,9 @@ public final class GPSListener implements LocationListener {
 
     private static List<LocationCallback> callbacks = new ArrayList<>();
 
+    /**
+     * Abstract class to impl
+     */
     public abstract static class LocationCallback {
         private Context context;
         private int callbackSignature;
@@ -37,6 +40,11 @@ public final class GPSListener implements LocationListener {
         protected abstract void onLocation(Context context, Location location);
     }
 
+    /**
+     * Add a callback function who will be triggered at every GPS Location update
+     * @param locationCallback
+     * @param callbackSignature
+     */
     public static void addCallback(LocationCallback locationCallback, int callbackSignature) {
         for (LocationCallback callback: GPSListener.callbacks) {
             if (callback.getCallbackSignature() == callbackSignature) {
@@ -47,6 +55,10 @@ public final class GPSListener implements LocationListener {
         GPSListener.callbacks.add(locationCallback);
     }
 
+    /**
+     *
+     * @return
+     */
     public static Location getLocation() {
         return GPSListener.location;
     }
