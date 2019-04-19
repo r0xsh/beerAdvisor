@@ -81,8 +81,10 @@ public class AddBeerFragment extends Fragment {
         beer.setCritic(beerCritic.getText().toString());
         beer.setRate(beerRating.getRating());
         beer.setImage(currentPhotoPath);
-        beer.setLat(GPSListener.getLocation().getLatitude());
-        beer.setLng(GPSListener.getLocation().getLongitude());
+        if (GPSListener.getLocation() != null) {
+            beer.setLat(GPSListener.getLocation().getLatitude());
+            beer.setLng(GPSListener.getLocation().getLongitude());
+        }
         beer.setCount(1);
         List<Beer> beerList = new ArrayList<Beer>();
         beerList.add(beer);
